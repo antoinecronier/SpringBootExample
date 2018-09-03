@@ -1,20 +1,23 @@
 package com.example.demo.model;
 
-public class MonModele {
-	private Long key;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import com.example.demo.model.base.DBItem;
+
+@Entity
+@Table(name="daBidule")
+public class MonModele extends DBItem {
+	
 	private String truc;
     private String bidule;
     private Integer monInt;
     private Boolean maBoule;
     private String[] mesTrucs;
-    
-	public Long getKey() {
-		return key;
-	}
-
-	public void setKey(Long key) {
-		this.key = key;
-	}
 
 	public Boolean getMaBoule() {
 		return maBoule;
@@ -56,9 +59,9 @@ public class MonModele {
 		this.mesTrucs = mesTrucs;
 	}
 	
-	public MonModele(Long key, String truc, String bidule, Integer monInt, Boolean maBoule, String[] mesTrucs) {
+	public MonModele(Long id, String truc, String bidule, Integer monInt, Boolean maBoule, String[] mesTrucs) {
         super();
-        this.key = key;
+        super.id = id;
         this.truc = truc;
         this.bidule = bidule;
         this.monInt = monInt;
