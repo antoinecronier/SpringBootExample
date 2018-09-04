@@ -2,14 +2,14 @@ package com.example.demo.model.security;
 
 import java.util.Set;
 
+import javax.persistence.Convert;
 import javax.persistence.Entity;
-import javax.persistence.Inheritance;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.MappedSuperclass;
 import javax.persistence.Table;
 
+import com.example.demo.converter.CryptoConverter;
 import com.example.demo.model.base.DBItem;
 
 // If abstract
@@ -20,6 +20,7 @@ import com.example.demo.model.base.DBItem;
 public class SecurityUser extends DBItem {
 
 	private String login;
+	@Convert(converter=CryptoConverter.class)
 	private String password;
 	private Boolean enable;
 

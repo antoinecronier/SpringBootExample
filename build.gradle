@@ -43,6 +43,9 @@ dependencies {
 	// View
 	compile('org.springframework.boot:spring-boot-starter-freemarker')
 	
+	// Crypt
+	compile group: 'commons-codec', name: 'commons-codec', version: '1.5'
+	
 	// Test project embeded elements
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
