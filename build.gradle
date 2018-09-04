@@ -37,6 +37,12 @@ dependencies {
 	// Database
 	runtime('mysql:mysql-connector-java')
 	
+	// Security
+	compile('org.springframework.boot:spring-boot-starter-security')
+	
+	// View
+	compile('org.springframework.boot:spring-boot-starter-freemarker')
+	
 	// Test project embeded elements
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
