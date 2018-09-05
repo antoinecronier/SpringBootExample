@@ -1,45 +1,49 @@
 package com.example.demo.utils;
 
-import java.io.UnsupportedEncodingException;
-
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
+import org.apache.commons.codec.binary.Base64;
 
 public class AES {
 
-	private static final String KEY_ALGORITHM = "SunJCE";
-	private static final String SECRET_KEY_ALGORITHM = "AES";
-	private static final String ALGORITHM = "AES/CBC/NoPadding";
-	private static final String IV = "AAAAAAAAAAAAAAAA";
 	private static final String ENCODING = "UTF-8";
+	private static final String ALGORITHM = "AES/CBC/PKCS5PADDING";
+	private static final String SECRET_ALGORITHM = "AES";
+	
+	public static String encrypt(String key, String initVector, String value) {
+        try {
+            IvParameterSpec iv = new IvParameterSpec(initVector.getBytes(ENCODING));
+            SecretKeySpec skeySpec = new SecretKeySpec(key.getBytes(ENCODING), SECRET_ALGORITHM);
 
-	public static byte[] encrypt(String plainText, String encryptionKey) throws Exception {
-		plainText = completData16Mult(plainText);
-		Cipher cipher = Cipher.getInstance(ALGORITHM, KEY_ALGORITHM);
-		SecretKeySpec key = new SecretKeySpec(encryptionKey.getBytes(ENCODING), SECRET_KEY_ALGORITHM);
-		cipher.init(Cipher.ENCRYPT_MODE, key, new IvParameterSpec(IV.getBytes(ENCODING)));
-		return cipher.doFinal(plainText.getBytes(ENCODING));
-	}
+            Cipher cipher = Cipher.getInstance(ALGORITHM);
+            cipher.init(Cipher.ENCRYPT_MODE, skeySpec, iv);
 
-	public static String decrypt(String cipherText, String encryptionKey) throws Exception {
-		cipherText = completData16Mult(cipherText);
-		Cipher cipher = Cipher.getInstance(ALGORITHM, KEY_ALGORITHM);
-		SecretKeySpec key = new SecretKeySpec(encryptionKey.getBytes(ENCODING), SECRET_KEY_ALGORITHM);
-		cipher.init(Cipher.DECRYPT_MODE, key, new IvParameterSpec(IV.getBytes(ENCODING)));
-		return new String(cipher.doFinal(cipherText.getBytes()), ENCODING);
-	}
+            byte[] encrypted = cipher.doFinal(value.getBytes());
 
-	private static String completData16Mult(String plainText) {
-		// Check encoded sizes
-		try {
-			while (plainText.getBytes(ENCODING).length % 16 != 0) {
-				plainText += "a";
-			}
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
+            return Base64.encodeBase64String(encrypted);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
 
-		return plainText;
-	}
+        return null;
+    }
+
+    public static String decrypt(String key, String initVector, String encrypted) {
+        try {
+            IvParameterSpec iv = new IvParameterSpec(initVector.getBytes(ENCODING));
+            SecretKeySpec skeySpec = new SecretKeySpec(key.getBytes(ENCODING), SECRET_ALGORITHM);
+
+            Cipher cipher = Cipher.getInstance(ALGORITHM);
+            cipher.init(Cipher.DECRYPT_MODE, skeySpec, iv);
+
+            byte[] original = cipher.doFinal(Base64.decodeBase64(encrypted));
+
+            return new String(original);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        return null;
+    }
 }
