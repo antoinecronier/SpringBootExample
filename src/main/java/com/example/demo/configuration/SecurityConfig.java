@@ -1,6 +1,9 @@
 package com.example.demo.configuration;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -13,14 +16,19 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @Configuration
 @EnableWebSecurity
 @EnableAutoConfiguration
+//@EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableGlobalMethodSecurity(securedEnabled = true)
 /**
  * For external connection use :
@@ -37,6 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter  {
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
 
+		//httpSecurity.csrf().disable();
 		httpSecurity
 				.authorizeRequests()
 				.anyRequest()
@@ -46,6 +55,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter  {
 					.loginPage("/login")
 					.usernameParameter("username").passwordParameter("password")
 					.permitAll()
+			.and()
+				.csrf().ignoringAntMatchers("/MonModele/**")
 			.and()
         		.httpBasic()
         	.and()
@@ -63,59 +74,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter  {
 	  return authenticationManager();
 	}
 	
-//	@Bean
-//	public CorsFilter corsFilter() { 
-//	    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//	    CorsConfiguration config = new CorsConfiguration();
-//	    config.setAllowCredentials(true);
-//	    config.addAllowedOrigin("*");
-//	    config.addAllowedHeader("*");
-//	    config.addAllowedMethod("*");
-//	    source.registerCorsConfiguration("/**", config);
-//	    FilterRegistrationBean bean = new FilterRegistrationBean(new CorsFilter(source));
-//	    bean.setOrder(0);
-//	    return new CorsFilter(source);
-//	}
-	
-//	@Bean
-//    public CorsConfigurationSource corsConfigurationSource() {
-//        final CorsConfiguration configuration = new CorsConfiguration();
-//        configuration.setAllowedOrigins(new ArrayList<String>() {
-//            {
-//                add("");
-//            }
-//        });
-//        configuration.setAllowedMethods(
-//                new ArrayList<String>() {
-//                    {
-//                        add("HEAD");
-//                        add("GET");
-//                        add("POST");
-//                        add("PUT");
-//                        add("DELETE");
-//                        add("PATCH");
-//                    }
-//                });
-//
-//        // setAllowCredentials(true) is important, otherwise:
-//        // The value of the 'Access-Control-Allow-Origin' header in the response must
-//        // not be the wildcard '' when the request's credentials mode is 'include'.
-//        configuration.setAllowCredentials(true);
-//        // setAllowedHeaders is important! Without it, OPTIONS preflight request
-//        // will fail with 403 Invalid CORS request
-//        configuration.setAllowedHeaders(
-//                new ArrayList<String>() {
-//                    {
-////                    	add("OPTIONS");
-//                        add("Authorization");
-//                        add("Cache-Control");
-//                        add("Content-Type");
-//                        add("Access-Control-Allow-Origin");
-//                    }
-//                });
-//
-//        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//        source.registerCorsConfiguration("/**", configuration);
-//        return source;
-//    }
+	@Bean
+	public CorsFilter corsFilter() { 
+	    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+	    CorsConfiguration config = new CorsConfiguration();
+	    config.setAllowCredentials(true);
+	    config.addAllowedOrigin("*");
+	    config.addAllowedHeader("*");
+	    config.addAllowedMethod("*");
+	    config.addExposedHeader("WWW-Authenticate");
+	    source.registerCorsConfiguration("/**", config);
+	    FilterRegistrationBean bean = new FilterRegistrationBean(new CorsFilter(source));
+	    bean.setOrder(0);
+	    return new CorsFilter(source);
+	}
 }
