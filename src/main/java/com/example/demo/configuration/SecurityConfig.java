@@ -16,6 +16,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -56,7 +57,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter  {
 					.usernameParameter("username").passwordParameter("password")
 					.permitAll()
 			.and()
-				.csrf().ignoringAntMatchers("/MonModele/**")
+				.logout()
+					.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+					.logoutSuccessUrl("/login")
+			.and()
+				.csrf()
+					.ignoringAntMatchers("/MonModele/**")
 			.and()
         		.httpBasic()
         	.and()
