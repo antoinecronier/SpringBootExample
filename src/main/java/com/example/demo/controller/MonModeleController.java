@@ -6,6 +6,7 @@ import com.example.demo.controller.base.BaseRestController;
 import com.example.demo.model.MonModele;
 
 import org.springframework.http.MediaType;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @RestController

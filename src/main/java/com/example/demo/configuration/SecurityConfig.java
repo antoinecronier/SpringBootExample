@@ -63,16 +63,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter  {
 			.and()
 				.csrf()
 					.ignoringAntMatchers("/MonModele/**")
+					.ignoringAntMatchers("/M2/**")
+					.ignoringAntMatchers("/M3/**")
+					.ignoringAntMatchers("/M4/**")
+					.ignoringAntMatchers("/M51/**")
+					.ignoringAntMatchers("/M51M52/**")
+					.ignoringAntMatchers("/M52/**")
 			.and()
         		.httpBasic()
         	.and()
         		.cors()
+//        	.and()
+//    			.authorizeRequests().anyRequest().anonymous()
+//    			.antMatchers("/home","/home/**")
+//    			.permitAll()
         	;
 	}
 	
 	@Override
 	public void configure(WebSecurity web) throws Exception {
 	    web.ignoring().antMatchers("/register","/register/**");
+	    web.ignoring().antMatchers("/M3","/M3/**");
 	}
 	
 	@Bean

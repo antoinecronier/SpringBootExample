@@ -37,11 +37,11 @@ public abstract class BaseRestController<T, ID extends Serializable> {
 
 	@RequestMapping(path = { "/", "" }, method = RequestMethod.POST)
 	public ResponseEntity<T> postItem(@RequestBody T item, HttpServletResponse response) {
-
-		response.addHeader("Access-Control-Allow-Origin", "*");
-		response.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-		response.addHeader("Access-Control-Allow-Headers", "origin, content-type, accept, x-requested-with");
-		response.addHeader("Access-Control-Max-Age", "3600");
+//
+//		response.addHeader("Access-Control-Allow-Origin", "*");
+//		response.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+//		response.addHeader("Access-Control-Allow-Headers", "origin, content-type, accept, x-requested-with");
+//		response.addHeader("Access-Control-Max-Age", "3600");
 
 		crudRepository.save(item);
 		new ResponseEntity<T>(HttpStatus.OK);
