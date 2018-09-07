@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.example.demo.model.serializer.EntitySerializerReferencer;
 import com.example.demo.repository.base.IBaseRepository;
 
 public abstract class BaseRestController<T, ID extends Serializable> {
@@ -21,10 +22,15 @@ public abstract class BaseRestController<T, ID extends Serializable> {
 	@Autowired
 	IBaseRepository<T, ID> crudRepository;
 
+	private void doLast() {
+		EntitySerializerReferencer.getInstance().getItemChecker().clear();
+	}
+
 	@RequestMapping(path = { "/", "" }, method = RequestMethod.GET)
 	public ResponseEntity<Iterable<T>> index() {
 		Iterable<T> items = crudRepository.findAll();
 		new ResponseEntity<T>(HttpStatus.OK);
+		doLast();
 		return ResponseEntity.ok(items);
 	}
 
@@ -32,6 +38,7 @@ public abstract class BaseRestController<T, ID extends Serializable> {
 	public ResponseEntity<Optional<T>> getByIndex(@PathVariable("index") ID index) {
 		Optional<T> item = crudRepository.findById(index);
 		new ResponseEntity<T>(HttpStatus.OK);
+		doLast();
 		return ResponseEntity.ok(item);
 	}
 
@@ -45,6 +52,7 @@ public abstract class BaseRestController<T, ID extends Serializable> {
 
 		crudRepository.save(item);
 		new ResponseEntity<T>(HttpStatus.OK);
+		doLast();
 		return ResponseEntity.ok(item);
 	}
 
@@ -52,6 +60,7 @@ public abstract class BaseRestController<T, ID extends Serializable> {
 	public ResponseEntity<T> updateItem(@RequestBody T item) {
 		crudRepository.save(item);
 		new ResponseEntity<T>(HttpStatus.OK);
+		doLast();
 		return ResponseEntity.ok(item);
 	}
 
@@ -59,6 +68,7 @@ public abstract class BaseRestController<T, ID extends Serializable> {
 	public ResponseEntity<T> deleteItem(@RequestBody T item) {
 		crudRepository.delete(item);
 		new ResponseEntity<T>(HttpStatus.OK);
+		doLast();
 		return ResponseEntity.ok(item);
 	}
 }
