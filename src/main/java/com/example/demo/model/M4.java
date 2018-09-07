@@ -17,7 +17,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 @Entity
 @Table(name = "m4")
-@JsonSerialize(using = M4Serializer.class)
+//@JsonSerialize(using = M4Serializer.class)
 public class M4 extends DBItem {
 
 	private String attM4;

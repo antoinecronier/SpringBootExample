@@ -6,6 +6,8 @@ import javax.persistence.Table;
 
 import com.example.demo.contract.M51M52Contract;
 import com.example.demo.model.base.DBItem;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "m51")

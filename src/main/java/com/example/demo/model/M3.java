@@ -20,7 +20,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 @Entity
 @Table(name = "m3")
-@JsonSerialize(using = M3Serializer.class)
+//@JsonSerialize(using = M3Serializer.class)
 public class M3 extends DBItem {
 
 	private String att1;

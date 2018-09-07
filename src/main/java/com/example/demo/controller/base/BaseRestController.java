@@ -23,7 +23,7 @@ public abstract class BaseRestController<T, ID extends Serializable> {
 	IBaseRepository<T, ID> crudRepository;
 
 	private void doLast() {
-		EntitySerializerReferencer.getInstance().getItemChecker().clear();
+		//EntitySerializerReferencer.getInstance().getItemChecker().clear();
 	}
 
 	@RequestMapping(path = { "/", "" }, method = RequestMethod.GET)

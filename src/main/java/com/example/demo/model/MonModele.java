@@ -55,7 +55,7 @@ public class MonModele extends DBItem {
 		this.mesTrucs = mesTrucs;
 	}
 	
-	public MonModele(Long id, String truc, String bidule, Integer monInt, Boolean maBoule, String[] mesTrucs) {
+	public MonModele(Integer id, String truc, String bidule, Integer monInt, Boolean maBoule, String[] mesTrucs) {
         super();
         super.id = id;
         this.truc = truc;
