@@ -10,13 +10,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.springframework.stereotype.Component;
-
+import com.example.demo.contract.M3Contract;
+import com.example.demo.contract.M4Contract;
 import com.example.demo.model.base.DBItem;
-import com.example.demo.model.serializer.M3Serializer;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 @Entity
 @Table(name = "m3")
@@ -25,18 +24,19 @@ public class M3 extends DBItem {
 
 	private String att1;
 
-	@ManyToMany(targetEntity=M4.class)
-	@JoinTable(name = "m3_m4s",
-	joinColumns = @JoinColumn(name = "m3ss_id"),
-	inverseJoinColumns = @JoinColumn(name = "m4s_id"))
-	
+	@ManyToMany(targetEntity = M4.class)
+	@JoinTable(name = "m3_m4s", 
+		joinColumns = @JoinColumn(name = "m3ss_id"), 
+		inverseJoinColumns = @JoinColumn(name = "m4s_id"))
+	@JsonIgnoreProperties(allowSetters = true, value = {M4Contract.M3S,M4Contract.M3SS})
 	private Set<M4> m4s;
 
-	@ManyToOne(targetEntity=M4.class,optional=true)
+	@ManyToOne(targetEntity = M4.class, optional = true)
+	@JsonIgnoreProperties(allowSetters = true, value = {M4Contract.M3S,M4Contract.M3SS})
 	private M4 m4;
 
-	@OneToOne(targetEntity=M3.class)
-	@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
+	@OneToOne(targetEntity = M3.class)
+	@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
 	private M3 m3;
 
 	public String getAtt1() {

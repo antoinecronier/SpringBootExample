@@ -13,6 +13,7 @@ import com.example.demo.contract.M3Contract;
 import com.example.demo.model.base.DBItem;
 import com.example.demo.model.serializer.M4Serializer;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 @Entity
@@ -23,14 +24,14 @@ public class M4 extends DBItem {
 	private String attM4;
 
 	@OneToMany(targetEntity=M3.class,mappedBy = M3Contract.M4)
-	@JsonBackReference
+	@JsonIgnoreProperties(allowSetters=true,value= {M3Contract.M4S})
 	private Set<M3> m3s;
 
 	@ManyToMany(targetEntity=M3.class)
 	@JoinTable(name = "m3_m4s",
 	joinColumns = @JoinColumn(name = "m4s_id"),
 	inverseJoinColumns = @JoinColumn(name = "m3ss_id"))
-	@JsonBackReference
+	@JsonIgnoreProperties(allowSetters=true,value= {M3Contract.M4S})
 	private Set<M3> m3ss;
 
 	public String getAttM4() {

@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @MappedSuperclass
-@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class,property="id")
+//@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class,property="id",scope=DBItem.class)
 public class DBItem {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
