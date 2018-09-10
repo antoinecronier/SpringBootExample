@@ -83,6 +83,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter  {
 	@Override
 	public void configure(WebSecurity web) throws Exception {
 	    web.ignoring().antMatchers("/register","/register/**");
+//	    // Allow all GET for every controllers
+//	    web.ignoring().antMatchers(HttpMethod.GET);
+//	    // Ignoring only get only for M3
+//	    web.ignoring().antMatchers(HttpMethod.GET,"/M3","/M3/**");
+	    
+	    // Ignoring all methods for M3
 	    web.ignoring().antMatchers("/M3","/M3/**");
 	}
 	
