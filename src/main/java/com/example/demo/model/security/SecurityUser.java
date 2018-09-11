@@ -9,8 +9,10 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.example.demo.contract.M4Contract;
 import com.example.demo.converter.CryptoConverter;
 import com.example.demo.model.base.DBItem;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 // If abstract
 //@MappedSuperclass
@@ -28,6 +30,7 @@ public class SecurityUser extends DBItem {
 	@JoinTable(name = "users_securityroles",
 		joinColumns = @JoinColumn(name = "user_id"),
 		inverseJoinColumns = @JoinColumn(name = "role_id"))
+	@JsonIgnoreProperties(allowSetters = true, value = {"users"})
 	private Set<SecurityRole> roles;
 
 	/**
