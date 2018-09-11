@@ -50,6 +50,11 @@ dependencies {
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
 
+test {
+    systemProperties 'property': 'value'
+    ignoreFailures = true
+}
+
 /***
 	Code quality
 */
@@ -57,26 +62,6 @@ def classesJava = "${project.buildDir}/classes/java/main/"
 def javasRoot = "${rootProject.rootDir}/src/main/java"
 def testClassesJava = "${project.buildDir}/classes/java/test"
 def testJavaRoot = "${rootProject.rootDir}/src/test/java"
-
-/*
-apply plugin: 'jacoco'
-
-jacoco {
-            toolVersion "0.7.4.201502262128"
-        }
-
-        jacocoTestReport {
-            description 'Run code coverage with JaCoCo.'
-            group 'Verification'
-            reports {
-                xml.enabled = false
-                csv.enabled = false
-                html.enabled = true
-                html.destination "${buildDir}/reports/jacoco"
-            }
-}
-*/
-
 
 /**
  * Checkstyle tasks
