@@ -38,8 +38,14 @@ dependencies {
 	// Database
 	runtime('mysql:mysql-connector-java')
 	
+	// Firebase
+	compile 'com.google.firebase:firebase-admin:5.9.0'
+
 	// Security
 	compile('org.springframework.boot:spring-boot-starter-security')
+	
+	// JSON utils
+	compile group: 'org.codehaus.jackson', name: 'jackson-mapper-asl', version: '1.9.5'
 	
 	// View
 	compile('org.springframework.boot:spring-boot-starter-freemarker')

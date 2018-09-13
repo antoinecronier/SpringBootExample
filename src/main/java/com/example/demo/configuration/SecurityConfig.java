@@ -59,6 +59,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter  {
 					.ignoringAntMatchers("/M51/**")
 					.ignoringAntMatchers("/M51M52/**")
 					.ignoringAntMatchers("/M52/**")
+					.ignoringAntMatchers("/firebase/**")
 			.and()
         		.httpBasic()
         	.and()

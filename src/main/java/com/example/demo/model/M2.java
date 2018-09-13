@@ -20,6 +20,10 @@ public class M2 extends DBItem {
 	@OneToMany(targetEntity=MonModele.class)
 	private Collection<MonModele> modelsss;
 
+	/**
+	 * {@link activate}
+	 * @return
+	 */
 	public String getData() {
 		return data;
 	}
